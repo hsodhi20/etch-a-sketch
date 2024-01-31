@@ -1,0 +1,23 @@
+* {
+    order : 1px black solid;
+}
+
+.container { 
+    display: flex;
+    justify-content: center;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+
+}
+.box {
+    color: aqua;
+    background-color: aqua;
+    border: 0.50px solid black;
+    width: 15px;
+    height: 15px;
+    box-sizing: border-box;
+}
+
