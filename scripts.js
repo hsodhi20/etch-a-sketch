@@ -1,16 +1,46 @@
-const container = document.querySelector('.container');
+const outerContainer = document.querySelector('.grid-outer-container'); 
+const createGridBtn = document.getElementById('createGridBtn');
 
+createGridBtn.addEventListener('click', createGrid);
 
-for (let i = 0; i < 16; i++) {
-    const grid = document.createElement('div');
-    grid.classList.add('grid');
-    for (let j = 0; j < 16; j++) {
-        const box = document.createElement('div');
-        box.classList.add('box');
-        grid.appendChild(box);
+function createGrid() {
+    const sizeInput = document.getElementById('sizeInput');
+    let side = Number(sizeInput.value);
+    let valid = validateInput(side);
+
+    if (valid) {
+        // Remove existing grids
+        outerContainer.textContent = '';
+
+        const squareSize = 400 / side;
+        console.log(squareSize);
+
+        for (let i = 0; i < side; i++) {
+            const grid = document.createElement('div');
+            grid.classList.add('grid');
+
+            for (let j = 0; j < side; j++) {
+                const box = document.createElement('div');
+                box.classList.add('box');
+                box.style.width = squareSize + 'px';
+                box.style.height = squareSize + 'px';
+                grid.appendChild(box);
+            }
+
+            outerContainer.appendChild(grid);
+        }
+
+        const boxes = document.querySelectorAll('.box');
+        boxes.forEach(box => {
+            box.addEventListener('mouseover', event => {
+                event.target.style.background = randomColor();
+            });
+        });
+    } else {
+        alert("Invalid Input! Please enter a number between 5 and 50.");
     }
-    container.appendChild(grid);
 }
+
 
 function randomColor() {
     const letters = '0123456789ABCDEF';
@@ -21,9 +51,6 @@ function randomColor() {
     return color;
 }
 
-const boxes = document.querySelectorAll('.box');
-boxes.forEach(box => {
-    box.addEventListener('mouseover', event => {
-        event.target.style.background = randomColor();
-    });
-});
+function validateInput(side) {
+    return 5 <= side && side <= 50 && Number.isInteger(side);
+}
